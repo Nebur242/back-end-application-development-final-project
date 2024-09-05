@@ -1,6 +1,6 @@
-import { logger } from "../config/logger.js";
+const { logger } = require("../config/logger.js");
 
-export const unexpectedErrorHandler = (server) => (error) => {
+const unexpectedErrorHandler = (server) => (error) => {
   logger.error(error);
   if (server) {
     server.close(() => {
@@ -11,3 +11,5 @@ export const unexpectedErrorHandler = (server) => (error) => {
     process.exit(1);
   }
 };
+
+module.exports = { unexpectedErrorHandler };

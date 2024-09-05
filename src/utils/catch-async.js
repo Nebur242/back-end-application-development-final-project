@@ -1,4 +1,4 @@
-import httpStatus from "http-status";
+const httpStatus = require("http-status");
 
 //'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 const getStatusCode = (method) => {
@@ -27,4 +27,6 @@ const catchAsync = (fn) => (req, res, next) => {
     .catch(next);
 };
 
-export { catchAsync };
+module.exports = {
+  catchAsync,
+};
