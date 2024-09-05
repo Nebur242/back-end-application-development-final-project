@@ -13,7 +13,7 @@ const register = async ({ username, password }) => {
   if (foundUser) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      `User with : ${username} already exists`
+      `User with : ${username} already exists`,
     );
   }
 
@@ -36,7 +36,7 @@ const login = async ({ username, password }) => {
   if (!found)
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      `User with username: ${username} not exists`
+      `User with username: ${username} not exists`,
     );
 
   // check password matching
