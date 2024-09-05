@@ -1,14 +1,15 @@
-import express from "express";
-import session from "express-session";
-import helmet from "helmet";
-import errorsMiddleware from "./middlewares/error.js";
-import morgan from "./config/morgan.js";
-import { ApiError } from "./utils/api-error.js";
-import httpStatus from "http-status";
-import cors from "cors";
+const express = require("express");
+const session = require("express-session");
+const helmet = require("helmet");
+const errorsMiddleware = require("./middlewares/error.js");
+const morgan = require("./config/morgan.js");
+const { ApiError } = require("./utils/api-error.js");
+const httpStatus = require("http-status");
+const cors = require("cors");
+const routesV1 = require("./routes");
 
 function bootstrap(app) {
-  const globalPrefix = "/api";
+  const globalPrefix = "api";
   const defaultVersion = "v1";
   //Request logger
   app.use(morgan.successHandler);
@@ -22,6 +23,8 @@ function bootstrap(app) {
     session({ secret: "fingerpint", resave: true, saveUninitialized: true })
   );
   app.use(express.json());
+
+  app.use(`/${globalPrefix}/${defaultVersion}`, routesV1);
 
   // catch uncaugth routes
   app.use((_req, _res, next) => {
@@ -37,4 +40,4 @@ function bootstrap(app) {
   return app;
 }
 
-export { bootstrap };
+module.exports = { bootstrap };
