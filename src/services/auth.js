@@ -21,12 +21,10 @@ const register = async ({ username, password }) => {
   const hashedPassword = await hashPassword(password);
 
   // execute the registration
-  const finalUser = await user.create({
+  return user.create({
     username: username,
     password: hashedPassword,
   });
-
-  return finalUser;
 };
 
 const login = async ({ username, password }) => {

@@ -3,6 +3,15 @@ const review = require("../models/review");
 const { ApiError } = require("../utils/api-error");
 const book = require("../models/book");
 
+const findAll = ({ bookId }) => {
+  if (!bookId) throw new ApiError(httpStatus.BAD_REQUEST, "Book id missing");
+  return review.findAll({
+    where: {
+      bookId,
+    },
+  });
+};
+
 const create = async ({ userId, bookId, text }) => {
   const found = await review.findOne({
     where: { userId, bookId: bookId },
@@ -16,18 +25,6 @@ const create = async ({ userId, bookId, text }) => {
   }
 
   return review.create({ userId, bookId, text });
-};
-
-const findAll = ({ bookId }) => {
-  return review.findAll({
-    ...(!bookId
-      ? {}
-      : {
-          where: {
-            bookId,
-          },
-        }),
-  });
 };
 
 const update = async ({ userId, text, id }) => {

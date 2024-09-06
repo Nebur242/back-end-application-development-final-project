@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const books = require("../models/book");
 const { ApiError } = require("../utils/api-error");
 const httpStatus = require("http-status");
+const { default: axios } = require("axios");
 
 const create = async ({ title, author, isbn }) => {
   const book = await books.findOne({ where: { title, author } });
@@ -48,10 +49,47 @@ const findAllByAuthor = async ({ author }) => {
   });
 };
 
+const findAllWithAxios = async () => {
+  const response = await axios.get("http://localhost:3000/api/v1/books");
+  return response.data.data;
+};
+
+const findOneByIsbnAxios = async ({ isbn }) => {
+  return axios
+    .get(`http://localhost:3000/api/v1/books/isbn/${isbn}`)
+    .then((res) => {
+      return res.data.data;
+    })
+    .catch((error) => {
+      throw new ApiError(
+        httpStatus.INTERNAL_SERVER_ERROR,
+        error?.mesaage || "Axios error"
+      );
+    });
+};
+
+const findAllByAuthorAxios = async ({ author }) => {
+  const response = await axios.get(
+    `http://localhost:3000/api/v1/books/author/${author}`
+  );
+  return response.data.data;
+};
+
+const findAllByTitleAxios = async ({ title }) => {
+  const response = await axios.get(
+    `http://localhost:3000/api/v1/books/title/${title}`
+  );
+  return response.data.data;
+};
+
 module.exports = {
   create,
   findAll,
   findAllByAuthor,
   findAllByTitle,
   findOneByIsbn,
+  findAllWithAxios,
+  findOneByIsbnAxios,
+  findAllByAuthorAxios,
+  findAllByTitleAxios,
 };

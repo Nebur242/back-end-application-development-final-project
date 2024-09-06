@@ -9,6 +9,22 @@ const findAll = catchAsync((req, _res) => {
   return services.findAll();
 });
 
+const findAllWithAxios = catchAsync((req, _res) => {
+  return services.findAllWithAxios();
+});
+
+const findAllByAuthorAxios = catchAsync((req, _res) => {
+  return services.findAllByAuthorAxios();
+});
+
+const findAllByTitleAxios = catchAsync((req, _res) => {
+  return services.findAllByTitleAxios();
+});
+
+const findOneByIsbnAxios = catchAsync((req, _res) => {
+  return services.findOneByIsbnAxios();
+});
+
 const findAllByAuthor = catchAsync((req, _res) => {
   const { author } = req.params;
   return services.findAllByAuthor({ author });
@@ -30,4 +46,8 @@ module.exports = {
   findAllByAuthor,
   findAllByTitle,
   findOneByIsbn,
+  findAllWithAxios,
+  findAllByAuthorAxios,
+  findAllByTitleAxios,
+  findOneByIsbnAxios,
 };
