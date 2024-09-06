@@ -1,10 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 const books = require("../models/book");
 const { ApiError } = require("../utils/api-error");
+const httpStatus = require("http-status");
 
 const create = async ({ title, author, isbn }) => {
   const book = await books.findOne({ where: { title, author } });
-  if (book) throw new ApiError(400, "Book already exists");
+  if (book) throw new ApiError(httpStatus.BAD_REQUEST, "Book already exists");
   return books.create({
     title,
     author,
@@ -34,7 +35,7 @@ const findOneByIsbn = ({ isbn }) => {
       },
     })
     .then((book) => {
-      if (!book) throw new ApiError(404, "Book not found !");
+      if (!book) throw new ApiError(httpStatus.NOT_FOUND, "Book not found !");
       return book;
     });
 };
