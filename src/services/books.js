@@ -63,21 +63,21 @@ const findOneByIsbnAxios = async ({ isbn }) => {
     .catch((error) => {
       throw new ApiError(
         httpStatus.INTERNAL_SERVER_ERROR,
-        error?.mesaage || "Axios error"
+        error?.mesaage || "Axios error",
       );
     });
 };
 
 const findAllByAuthorAxios = async ({ author }) => {
   const response = await axios.get(
-    `http://localhost:3000/api/v1/books/author/${author}`
+    `http://localhost:3000/api/v1/books/author/${author}`,
   );
   return response.data.data;
 };
 
 const findAllByTitleAxios = async ({ title }) => {
   const response = await axios.get(
-    `http://localhost:3000/api/v1/books/title/${title}`
+    `http://localhost:3000/api/v1/books/title/${title}`,
   );
   return response.data.data;
 };
